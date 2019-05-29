@@ -1,0 +1,114 @@
+// This C++ program is for created to aid school instructors or professors
+// This can access their students’ academic performances in class
+// Problem 1
+
+#include<iostream>
+#include<iomanip>
+#include<string>
+
+using namespace std;
+
+struct names
+{
+	string name;
+	float Q, A, PE, FE, GRADE, GPA;
+};
+
+int main()
+{
+	names students[50][7]; // Declaring Array Students
+	float Q, A, PE, FE, GRADE, GPA, Temp; // Declaring using float type
+	string Prog; // Declaring in string type
+	
+	for ( int index = 0; index < 50; index ++ )
+	{
+		cout << "Input the student's name: "; getline(cin, students[index][0].name); // Inputing the names of the students
+		cout << "Input his/her total score in quizzes (score/450): "; cin >> students[index][1].Q;	// Inputing the student's score in quizzes
+		cout << "Input his/her total score in activities (score/1350): "; cin >> students[index][2].A; // Inputing the student's score in activities
+		cout << "Input his/her score in Preliminary Examination (score/100): "; cin >> students[index][3].PE; // Inputing the student's score in the Prelims
+		cout << "Input his/her score in Final Examination (score/100): "; cin >> students[index][4].FE; // Inputing the student's score in Finals
+		cin.ignore();
+	}
+	
+	// Computations for the RAW GRADE of the Students
+	for ( int index = 0; index < 50; index ++ )
+	{
+		students[index][5].GRADE = (((students[index][1].Q / 450 ) * 30 ) + ((students[index][2].A / 1350 ) * 15 ) + ((students[index][3].PE / 100) * 25 ) + ((students[index][4].FE / 100 ) * 30 ));
+	}
+	
+	// Determining the Grade Point Average of the students
+	for ( int index = 0; index < 50; index ++ )
+	{
+		if ( students[index][5].GRADE >= 95.57 )
+			students[index][6].GPA = 1.00; // FINAL GRADE TRANSMUTATION IN: 95.57- 100
+			
+		else if ( students[index][5].GRADE >= 91.1 ) // FINAL GRADE TRANSMUTATION IN: 91.12 - 95.56
+			students[index][6].GPA = 1.25;
+			
+		else if ( students[index][5].GRADE >= 86.68 ) // FINAL GRADE TRANSMUTATION IN: 86.68 - 91.11
+			students[index][6].GPA = 1.50;
+			
+		else if ( students[index][5].GRADE >= 82.23 ) // FINAL GRADE TRANSMUTATION IN: 82.23 - 86.67
+			students[index][6].GPA = 1.75;
+			
+		else if ( students[index][5].GRADE >= 77.79 ) // FINAL GRADE TRANSMUTATION IN:77.79- 82.22
+			students[index][6].GPA = 2.00;
+			
+		else if ( students[index][5].GRADE >= 73.34 ) // FINAL GRADE TRANSMUTATION IN: 73.34 - 77.78
+			students[index][6].GPA = 2.25;
+			
+		else if ( students[index][5].GRADE >= 68.90 ) // FINAL GRADE TRANSMUTATION IN: 68.90 - 73.33
+			students[index][6].GPA = 2.50;
+			
+		else if ( students[index][5].GRADE >= 64.45 ) // FINAL GRADE TRANSMUTATION IN: 64.45 - 68.89
+			students[index][6].GPA = 2.75;
+			
+		else if ( students[index][5].GRADE >= 60 ) // FINAL GRADE TRANSMUTATION IN: 60.00 - 64.44
+			students[index][6].GPA = 3.00;
+			
+		else
+			students[index][6].GPA = 5.00;
+	}
+	
+	// Output of the student's raw grade and gpa
+	for ( int index = 0; index < 50; index ++ )
+	{
+		cout << students[index][0].name << "'s raw grade is " << setprecision(3) << students[index][5].GRADE << " and having a GPA of " << setprecision(3) << students[index][6].GPA << endl;
+			if (students[index][5].GRADE >= 60)
+			{
+				cout << "The Student Passed!" << endl; // IF THE STUDENT'S RAW GRADE IS GREATER THAN OR EQUAL TO 60, HE/SHE PASSES THE SUBJECT
+			}
+			else
+			{
+				cout << "The Student Failed" << endl; // IF THE STUDENT'S RAW GRADE IS LESS THAN 60, HE/SHE FAILS THE SUBJECT
+			}
+	}
+	
+	// Selection Sorting...
+	for ( int index = 0; index < 50; index ++ )
+	{
+		for ( int card = index + 1; card <50; card++ )
+		{
+ 			if (students[index][6].GPA > students[card][6].GPA)
+ 				{
+ 					Temp = students[index][6].GPA;
+ 					students[index][6].GPA = students[card][6].GPA;
+ 					students[card][6].GPA = Temp;
+
+ 					Prog = students[index][0].name;
+ 					students[index][0].name = students[card][0].name;
+ 					students[card][0].name = Prog;
+	 			}
+		}
+	}
+	
+	// Output of the top 10 outstanding students
+		cout << "The top 10 performing students in the class are the following " << endl;
+		for ( int index = 0; index < 10; index ++ )
+		{		
+ 			cout << students[index][0].name << " having a GPA of " << students[index][6].GPA << endl;
+		}
+		
+		cout << "Congratulations!!" << endl;
+		return 0;
+}
