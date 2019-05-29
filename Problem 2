@@ -1,0 +1,106 @@
+// Coded with Dev C++
+// Problem 2
+// The measurement of the sides is a user-input
+// This program computes the following values based on the given sides of the triangle
+
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+double rad_to_degree(double x)
+	{
+		//inputs a radian and returns its equivalent in degrees
+		return x*(180/3.14159);
+	}
+	
+double angle_computer(double a, double b, double c)
+	{
+	//a and b are the adjacent sides and c is the opposite side
+	return rad_to_degree(acos((pow(a,2)+pow(b,2)-pow(c,2))/(2*a*b)));
+	}	
+	
+double round(double x)
+	{
+	//rounds down the input to two decimal places
+	return int(x*100)/100.0;
+	}
+	
+int main()
+{
+	double a,b,c, A1, A2, A3, area, perimeter, s, apothem, circumradius;
+	string B, D;
+	
+	cout << "Enter the three sides of a triangle seperated by a space: ";
+	cin >> a >> b >> c;
+	A1 = round(angle_computer(a,b,c));
+	A2 = round(angle_computer(a,c,b));
+	A3 = round(angle_computer(c,b,a));
+	
+	//Determine if Scalene, Isosceles, or Equilateral
+	if (a==b && b==c)
+	{
+		B ="Equilateral";
+	}
+	else if (a==b || a==c || b==c)
+	{
+	B = "Isosceles";
+	}
+	
+	else
+	{
+	B = "Scalene";
+	}
+	
+	//Perimeter
+	perimeter = a+b+c;
+	
+	//Area
+	//Heron's formula is used to compute for the area given three side lengths
+	s = perimeter/2.0;
+	area = sqrt(s*(s-a)*(s-b)*(s-c));
+	
+	//Determine if Acute, Right, or Obtuse
+	if (A1==90 || A2==90 ||A3==90)
+	{
+	//checks if any angle is 90 degrees
+	D ="Right Triangle";
+	}
+	
+	else if (A1<90 && A2<90 && A3<90)
+	{
+	//checks if all the angles are less than 90 degrees
+	D = "Acute Triangle";
+	}
+	
+	else
+	{
+	//outputs obtuse if otherwise
+	D = "Obtuse Triangle";
+	}
+	
+	//Computes the length of the apothem
+	apothem=2*(area/perimeter);
+	
+	//Computes the length of the circumradius
+	circumradius = ((a*b*c)/(sqrt((a+b+c)*(b+c-a)*(c+a-b)*(a+b-c))));
+	
+	// Outputs all data determined from input values
+	cout << "A: The three angles are " << A1 << " degrees , " << A2 << " degrees , " << A3 << " degrees\n" ;
+	cout << "B: " << B << " Triangle\n" ;
+	cout << "C: Area: " << area << " units square and Perimeter: "<< perimeter << " units \n" ;
+	cout << "D: " << D << "\n" ;
+	cout << "Circumradius: " << circumradius << " units \n" ;
+	
+	if (B == "Equilateral")
+	{
+	cout << "Apothem: " << apothem << " units";
+	}
+	
+	else
+	{
+	cout << "Apothem: None" << endl;
+	}
+	
+	return 0;
+}
